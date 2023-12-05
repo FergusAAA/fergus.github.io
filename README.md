@@ -1,2 +1,2 @@
-# fergus.github.io
-Blog
+# Blog
+> Organize what I've learned
