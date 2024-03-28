@@ -5,7 +5,7 @@
     <url>/fergus.github.io/2024/03/28/Android/Repo/</url>
     <content><![CDATA[<style>
     html, body, .markdown-body {
-        font-family:"JetBrainsMono Nerd Font", sans, serif;
+        font-family:"JetBrainsMono Nerd Font";
         font-size: 16px;
     }
 </style>
