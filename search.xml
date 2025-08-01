@@ -1,6 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Stow 管理.dotfiles 操作指南</title>
+    <url>/fergus.github.io/2025/07/31/CLI/Stow/</url>
+    <content><![CDATA[<style>
+    html, body, .markdown-body {
+        font-family:"JetBrainsMono Nerd Font";
+        font-size: 16px;
+    }
+</style>
+<hr>
+<h1 id="什么是-stow"><a href="#什么是-stow" class="headerlink" title="什么是 stow"></a>什么是 stow</h1><p>stow 是一款符号链接管理工具，用于集中管理分散的配置文件（dotfiles）或软件包，通过创建指向独立存储目录的符号链接，避免文件冲突并实现一键部署与卸载</p>
+<h1 id="为什么要用-stow-来管理-dotfiles"><a href="#为什么要用-stow-来管理-dotfiles" class="headerlink" title="为什么要用 stow 来管理 .dotfiles"></a>为什么要用 stow 来管理 .dotfiles</h1><blockquote>
+<p>仅使用git+文件夹来管理配置文件的方式存在许多问题</p>
+</blockquote>
+<ol>
+<li>手动管理混乱</li>
+<li>家目录堆满分散的 dotfiles，易冲突、难维护。</li>
+<li>符号链接易出错：手工创建&#x2F;删除链接易遗漏或损坏文件。</li>
+<li>迁移部署繁琐：新环境需复制文件或重写配置，效率低。</li>
+<li>版本控制困难</li>
+</ol>
+<h1 id="安装-stow"><a href="#安装-stow" class="headerlink" title="安装 stow"></a>安装 stow</h1><p>MacOS可以通过包管理器 homebrew 来安装：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">brew install stow<br></code></pre></td></tr></table></figure>
+<p>Linux 各种发行版也可以通过各自的包管理工具安装:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">sudo pacmane -S stow<br>sudo apt install stow<br></code></pre></td></tr></table></figure>
+
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><blockquote>
+<p>举例:管理 zsh kitty  </p>
+</blockquote>
+<h3 id="建立目录"><a href="#建立目录" class="headerlink" title="建立目录"></a>建立目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">mkdir -p $HOME/.dotfiles<br>mkdir -p $HOME/.dotfiles/zsh<br>mkdir -p $HOME/.dotfiles/kitty<br></code></pre></td></tr></table></figure>
+
+<h3 id="文件夹来管理配置文件"><a href="#文件夹来管理配置文件" class="headerlink" title="文件夹来管理配置文件"></a>文件夹来管理配置文件</h3><p>zsh 配置文件:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">将.zshrc 移动到 .dotfiles/zsh 目录</span><br>mv $HOME/.zshrc $HOME/.dotfiles/zsh/<br></code></pre></td></tr></table></figure>
+
+<p>kitty 配置文件:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">在kitty目录下,创建对应kitty配置文件路径的目录</span><br>cd $HOME/.dotfiles/kitty<br>mkdir -p .config/kitty<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">将原有的kitty配置文件移动到对应目录</span><br>mv $HOME/.config/kitty/kitty.conf $HOME/.dotfiles/kitty/.config/kitty/<br></code></pre></td></tr></table></figure>
+
+<h3 id="利用-stow-创建符号链接"><a href="#利用-stow-创建符号链接" class="headerlink" title="利用 stow 创建符号链接"></a>利用 stow 创建符号链接</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">为所有管理的配置文件建立符号链接</span><br>stow -v -t ~ */<br></code></pre></td></tr></table></figure>
+
+<p>如果只想为某个配置文件建立符号链接，可以指定目录：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">指定目录为 zsh</span><br>stow -v -t ~ zsh<br></code></pre></td></tr></table></figure>
+
+<h3 id="纳入版本控制"><a href="#纳入版本控制" class="headerlink" title="纳入版本控制"></a>纳入版本控制</h3><blockquote>
+<p>一个好的实践是将 .dotfiles 目录纳入版本控制，这样可以轻松管理和迁移配置文件</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">cd $HOME/.dotfiles<br>git init<br>git add .<br>git commit -m &quot;Initial commit of dotfiles&quot;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机科学</category>
+        <category>Linux</category>
+        <category>CLI</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>技术文章</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim奇技淫巧(实用快捷键)</title>
+    <url>/fergus.github.io/2024/08/08/CLI/Vim/</url>
+    <content><![CDATA[<style>
+    html, body, .markdown-body {
+        font-family:"JetBrainsMono Nerd Font";
+        font-size: 16px;
+    }
+</style>
+
+<h1 id="Vim奇技淫巧（实用快捷键）"><a href="#Vim奇技淫巧（实用快捷键）" class="headerlink" title="Vim奇技淫巧（实用快捷键）"></a>Vim奇技淫巧（实用快捷键）</h1><blockquote>
+<p>本文适合对Vim有一定认知的，对Vim快捷键有基础了解的同学观看。<br>笔者主要记录一些平时自己的学习心得，以及一些可能用不到，但是用到的时候真的很cool的技巧。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>c       按下c键<br>cv      依次按下<code>c v</code>键<br>&lt;C-a&gt;   同时按下<code>Ctrl a</code>键<br>g&lt;C-)&gt;  按下<code>g</code>键后再同时按下<code>Ctrl )</code>键<br>&lt;C-w&gt;h  同时按下<code>Ctrl w</code>键后再按下<code>h</code>键<br>所有快捷键都按以上逻辑表达</p>
+<hr>
+<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><blockquote>
+<p>简单介绍一下Vim的基础操作逻辑。</p>
+</blockquote>
+<ol>
+<li>Vim有<code>正常模式</code>(Normal-mode)，<code>插入模式</code>(Insert-mode)，<code>命令模式</code>(Command-mode)，<code>可视模式</code>(Visual-mode)。可以在Normal-mode中进入其他不同的模式，如使用<code>i</code>进入插入模式，使用<code>v</code>进入Visual-mode，使用<code>:</code>进入Command-mode。</li>
+<li>可以使用<code>hjkl</code>，进行上下左右移动</li>
+<li>Normal-mode下输入<code>:q</code>(退出) 或 <code>:wq</code>(保存退出)</li>
+<li>Normal-mode下快捷键基础操作逻辑：操作符-修饰符-对象，例如：<code>daw</code>(删除-一个-单词)</li>
+</ol>
+<h2 id="选中文本"><a href="#选中文本" class="headerlink" title="选中文本"></a>选中文本</h2><h3 id="选中"><a href="#选中" class="headerlink" title="选中"></a>选中</h3><ul>
+<li><p>基础版本：veeee &#x2F; vwwww<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_131800.gif" alt="gif"></p>
+</li>
+<li><p>中级版本(使用修饰符+对象)</p>
+<ul>
+<li>vt( : 从当前位置选中到下一个<code>(</code>的位置<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_140149.gif" alt="gif"></li>
+<li>va( &#x2F; vi( &#x2F; va{ &#x2F; vi{ : 选中当前括号(花括号)的内容,<code>i</code>(Inside)不包含 <code>a</code>包含<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_141011.gif" alt="git"></li>
+</ul>
+</li>
+<li><p>高级版本(实际上很少用)</p>
+<ul>
+<li>v&#x2F; (c也可以使用当前技巧,且更加合适)<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_153453.gif" alt="gif"></li>
+</ul>
+</li>
+</ul>
+<h3 id="全选"><a href="#全选" class="headerlink" title="全选"></a>全选</h3><ul>
+<li>ggVG: gg(跳转到首行) V(选中当前行) G(跳转到尾)</li>
+<li>使用命令模式%<ul>
+<li>%d:删除所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.51.58.gif" alt="gif"></li>
+<li>%y:复制所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.45.16.gif" alt="gif"></li>
+</ul>
+</li>
+</ul>
+<h2 id="命令模式下获取光标所在单词"><a href="#命令模式下获取光标所在单词" class="headerlink" title="命令模式下获取光标所在单词"></a>命令模式下获取光标所在单词</h2><blockquote>
+<p>命令模式下替换内容时很好用</p>
+</blockquote>
+<p>在命令模式下输入<code>&lt;C-r&gt;&lt;C-w&gt;</code><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2016.33.10.gif" alt="gif"></p>
+]]></content>
+      <categories>
+        <category>计算机科学</category>
+        <category>Linux</category>
+        <category>CLI</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>技术文章</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Repo使用</title>
     <url>/fergus.github.io/2024/03/28/Android/Repo/</url>
     <content><![CDATA[<style>
@@ -59,118 +179,6 @@
       <categories>
         <category>计算机科学</category>
         <category>Android</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>技术文章</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vim奇技淫巧(实用快捷键)</title>
-    <url>/fergus.github.io/2024/08/08/CLI/Vim/</url>
-    <content><![CDATA[<style>
-    html, body, .markdown-body {
-        font-family:"JetBrainsMono Nerd Font";
-        font-size: 16px;
-    }
-</style>
-
-<h1 id="Vim奇技淫巧（实用快捷键）"><a href="#Vim奇技淫巧（实用快捷键）" class="headerlink" title="Vim奇技淫巧（实用快捷键）"></a>Vim奇技淫巧（实用快捷键）</h1><blockquote>
-<p>本文适合对Vim有一定认知的，对Vim快捷键有基础了解的同学观看。<br>笔者主要记录一些平时自己的学习心得，以及一些可能用不到，但是用到的时候真的很cool的技巧。</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>c       按下c键<br>cv      依次按下<code>c v</code>键<br>&lt;C-a&gt;   同时按下<code>Ctrl a</code>键<br>g&lt;C-)&gt;  按下<code>g</code>键后再同时按下<code>Ctrl )</code>键<br>&lt;C-w&gt;h  同时按下<code>Ctrl w</code>键后再按下<code>h</code>键<br>所有快捷键都按以上逻辑表达</p>
-<hr>
-<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><blockquote>
-<p>简单介绍一下Vim的基础操作逻辑。</p>
-</blockquote>
-<ol>
-<li>Vim有<code>正常模式</code>(Normal-mode)，<code>插入模式</code>(Insert-mode)，<code>命令模式</code>(Command-mode)，<code>可视模式</code>(Visual-mode)。可以在Normal-mode中进入其他不同的模式，如使用<code>i</code>进入插入模式，使用<code>v</code>进入Visual-mode，使用<code>:</code>进入Command-mode。</li>
-<li>可以使用<code>hjkl</code>，进行上下左右移动</li>
-<li>Normal-mode下输入<code>:q</code>(退出) 或 <code>:wq</code>(保存退出)</li>
-<li>Normal-mode下快捷键基础操作逻辑：操作符-修饰符-对象，例如：<code>daw</code>(删除-一个-单词)</li>
-</ol>
-<h2 id="选中文本"><a href="#选中文本" class="headerlink" title="选中文本"></a>选中文本</h2><h3 id="选中"><a href="#选中" class="headerlink" title="选中"></a>选中</h3><ul>
-<li><p>基础版本：veeee &#x2F; vwwww<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_131800.gif" alt="gif"></p>
-</li>
-<li><p>中级版本(使用修饰符+对象)</p>
-<ul>
-<li>vt( : 从当前位置选中到下一个<code>(</code>的位置<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_140149.gif" alt="gif"></li>
-<li>va( &#x2F; vi( &#x2F; va{ &#x2F; vi{ : 选中当前括号(花括号)的内容,<code>i</code>(Inside)不包含 <code>a</code>包含<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_141011.gif" alt="git"></li>
-</ul>
-</li>
-<li><p>高级版本(实际上很少用)</p>
-<ul>
-<li>v&#x2F; (c也可以使用当前技巧,且更加合适)<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_153453.gif" alt="gif"></li>
-</ul>
-</li>
-</ul>
-<h3 id="全选"><a href="#全选" class="headerlink" title="全选"></a>全选</h3><ul>
-<li>ggVG: gg(跳转到首行) V(选中当前行) G(跳转到尾)</li>
-<li></li>
-</ul>
-]]></content>
-      <categories>
-        <category>计算机科学</category>
-        <category>Linux</category>
-        <category>CLI</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>技术文章</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Stow 管理.dotfiles 操作指南</title>
-    <url>/fergus.github.io/2025/07/31/CLI/Stow/</url>
-    <content><![CDATA[<style>
-    html, body, .markdown-body {
-        font-family:"JetBrainsMono Nerd Font";
-        font-size: 16px;
-    }
-</style>
-<hr>
-<h1 id="什么是-stow"><a href="#什么是-stow" class="headerlink" title="什么是 stow"></a>什么是 stow</h1><p>stow 是一款符号链接管理工具，用于集中管理分散的配置文件（dotfiles）或软件包，通过创建指向独立存储目录的符号链接，避免文件冲突并实现一键部署与卸载</p>
-<h1 id="为什么要用-stow-来管理-dotfiles"><a href="#为什么要用-stow-来管理-dotfiles" class="headerlink" title="为什么要用 stow 来管理 .dotfiles"></a>为什么要用 stow 来管理 .dotfiles</h1><blockquote>
-<p>仅使用git+文件夹来管理配置文件的方式存在许多问题</p>
-</blockquote>
-<ol>
-<li>手动管理混乱</li>
-<li>家目录堆满分散的 dotfiles，易冲突、难维护。</li>
-<li>符号链接易出错：手工创建&#x2F;删除链接易遗漏或损坏文件。</li>
-<li>迁移部署繁琐：新环境需复制文件或重写配置，效率低。</li>
-<li>版本控制困难</li>
-</ol>
-<h1 id="安装-stow"><a href="#安装-stow" class="headerlink" title="安装 stow"></a>安装 stow</h1><p>MacOS可以通过包管理器 homebrew 来安装：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">brew install stow<br></code></pre></td></tr></table></figure>
-<p>Linux 各种发行版也可以通过各自的包管理工具安装:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">sudo pacmane -S stow<br>sudo apt install stow<br></code></pre></td></tr></table></figure>
-
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><blockquote>
-<p>举例:管理 zsh kitty  </p>
-</blockquote>
-<h3 id="建立目录"><a href="#建立目录" class="headerlink" title="建立目录"></a>建立目录</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">mkdir -p $HOME/.dotfiles<br>mkdir -p $HOME/.dotfiles/zsh<br>mkdir -p $HOME/.dotfiles/kitty<br></code></pre></td></tr></table></figure>
-
-<h3 id="文件夹来管理配置文件"><a href="#文件夹来管理配置文件" class="headerlink" title="文件夹来管理配置文件"></a>文件夹来管理配置文件</h3><p>zsh 配置文件:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">将.zshrc 移动到 .dotfiles/zsh 目录</span><br>mv $HOME/.zshrc $HOME/.dotfiles/zsh/<br></code></pre></td></tr></table></figure>
-
-<p>kitty 配置文件:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">在kitty目录下,创建对应kitty配置文件路径的目录</span><br>cd $HOME/.dotfiles/kitty<br>mkdir -p .config/kitty<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">将原有的kitty配置文件移动到对应目录</span><br>mv $HOME/.config/kitty/kitty.conf $HOME/.dotfiles/kitty/.config/kitty/<br></code></pre></td></tr></table></figure>
-
-<h3 id="利用-stow-创建符号链接"><a href="#利用-stow-创建符号链接" class="headerlink" title="利用 stow 创建符号链接"></a>利用 stow 创建符号链接</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">为所有管理的配置文件建立符号链接</span><br>stow -v -t ~ */<br></code></pre></td></tr></table></figure>
-
-<p>如果只想为某个配置文件建立符号链接，可以指定目录：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">指定目录为 zsh</span><br>stow -v -t ~ zsh<br></code></pre></td></tr></table></figure>
-
-<h3 id="纳入版本控制"><a href="#纳入版本控制" class="headerlink" title="纳入版本控制"></a>纳入版本控制</h3><blockquote>
-<p>一个好的实践是将 .dotfiles 目录纳入版本控制，这样可以轻松管理和迁移配置文件</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">cd $HOME/.dotfiles<br>git init<br>git add .<br>git commit -m &quot;Initial commit of dotfiles&quot;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机科学</category>
-        <category>Linux</category>
-        <category>CLI</category>
       </categories>
       <tags>
         <tag>博客</tag>
