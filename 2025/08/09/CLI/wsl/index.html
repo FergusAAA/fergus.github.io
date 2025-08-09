@@ -16,25 +16,26 @@
   <meta name="author" content="Fergus">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Stow 是一个用于管理软件包和配置文件链接的工具，主要用于在指定目录中创建符号链接，实现软件的安装和配置文件的管理">
+    <meta name="description" content="Windows Subsystem for Linux（WSL）是微软开发的兼容层，允许用户在Windows系统中直接运行Linux二进制可执行文件，无需虚拟机或双系统。它提供完整的Linux命令行环境，支持主流Linux发行版，便于开发者在Windows上进行跨平台开发。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Stow 管理.dotfiles 操作指南">
-<meta property="og:url" content="https://fergusaaa.github.io/fergus.github.io/2025/07/31/CLI/Stow/index.html">
+<meta property="og:title" content="一起来配置 wsl2 吧(Arch版)">
+<meta property="og:url" content="https://fergusaaa.github.io/fergus.github.io/2025/08/09/CLI/wsl/index.html">
 <meta property="og:site_name" content="Fergus&#39;s Blog">
-<meta property="og:description" content="Stow 是一个用于管理软件包和配置文件链接的工具，主要用于在指定目录中创建符号链接，实现软件的安装和配置文件的管理">
+<meta property="og:description" content="Windows Subsystem for Linux（WSL）是微软开发的兼容层，允许用户在Windows系统中直接运行Linux二进制可执行文件，无需虚拟机或双系统。它提供完整的Linux命令行环境，支持主流Linux发行版，便于开发者在Windows上进行跨平台开发。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/FergusAAA/blog-img/main/arch.jpeg">
-<meta property="article:published_time" content="2025-07-31T09:13:35.000Z">
-<meta property="article:modified_time" content="2025-07-31T11:52:22.059Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl.png">
+<meta property="article:published_time" content="2025-08-09T01:44:12.000Z">
+<meta property="article:modified_time" content="2025-08-09T07:07:20.526Z">
 <meta property="article:author" content="Fergus">
 <meta property="article:tag" content="博客">
 <meta property="article:tag" content="技术文章">
+<meta property="article:tag" content="windows">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/FergusAAA/blog-img/main/arch.jpeg">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl.png">
   
   
   
-  <title>Stow 管理.dotfiles 操作指南 - Fergus&#39;s Blog</title>
+  <title>一起来配置 wsl2 吧(Arch版) - Fergus&#39;s Blog</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -198,13 +199,13 @@
   
 
 <div id="banner" class="banner" parallax=true
-     style="background: url('https://raw.githubusercontent.com/FergusAAA/blog-img/main/GNU+Linux.png') no-repeat center center; background-size: cover;">
+     style="background: url('https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl.png') no-repeat center center; background-size: cover;">
   <div class="full-bg-img">
     <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="Stow 管理.dotfiles 操作指南"></span>
+            <span id="subtitle" data-typed-text="一起来配置 wsl2 吧(Arch版)"></span>
           
         </div>
 
@@ -215,8 +216,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-31 17:13" pubdate>
-          2025年7月31日 下午
+        <time datetime="2025-08-09 09:44" pubdate>
+          2025年8月9日 上午
         </time>
       </span>
     
@@ -227,7 +228,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          433 字
+          689 字
         
       </span>
     
@@ -238,7 +239,7 @@
         
         
         
-          4 分钟
+          6 分钟
         
       </span>
     
@@ -275,7 +276,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">Stow 管理.dotfiles 操作指南</h1>
+            <h1 id="seo-header">一起来配置 wsl2 吧(Arch版)</h1>
             
             
               <div class="markdown-body">
@@ -287,42 +288,46 @@
     }
 </style>
 <hr>
-<h1 id="什么是-stow"><a href="#什么是-stow" class="headerlink" title="什么是 stow"></a>什么是 stow</h1><p>stow 是一款符号链接管理工具，用于集中管理分散的配置文件（dotfiles）或软件包，通过创建指向独立存储目录的符号链接，避免文件冲突并实现一键部署与卸载</p>
-<h1 id="为什么要用-stow-来管理-dotfiles"><a href="#为什么要用-stow-来管理-dotfiles" class="headerlink" title="为什么要用 stow 来管理 .dotfiles"></a>为什么要用 stow 来管理 .dotfiles</h1><blockquote>
-<p>仅使用git+文件夹来管理配置文件的方式存在许多问题</p>
+<p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/btw.jpg" srcset="/fergus.github.io/img/loading.gif" lazyload alt="btw" title="btw"><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/i_only_use_arch.webp" srcset="/fergus.github.io/img/loading.gif" lazyload alt="i_only_use_arch" title="i_only_use_arch"></p>
+<h1 id="先看看成品图"><a href="#先看看成品图" class="headerlink" title="先看看成品图"></a>先看看成品图</h1><p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl_show1.png" srcset="/fergus.github.io/img/loading.gif" lazyload alt="wsl pokemon" title="pokemon"><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl_show2.png" srcset="/fergus.github.io/img/loading.gif" lazyload alt="wsl fastfetch" title="fastfetch"></p>
+<p>配置美化,最后就是为了截图的这一刻<br><img src="https://imagehost.mintimate.cn/emoticon/makeTroubleInKeyboard.gif" srcset="/fergus.github.io/img/loading.gif" lazyload alt="gif" title="嘿嘿"></p>
+<h1 id="准备终端模拟器"><a href="#准备终端模拟器" class="headerlink" title="准备终端模拟器"></a>准备终端模拟器</h1><blockquote>
+<p>一个好用的,配置随心的终端模拟器是美化的起点.</p>
 </blockquote>
+<p>这里只推荐 <code>wezterm</code> 和 <code>Windows Terminal</code>. 不过还是更推荐 <code>wezterm</code>, <code>wezterm</code>由Rust开发,更高性能. 跨平台,多平台使用体验基本一致,而 <code>Windows Terminal</code> 只支持 Windows. <code>wezterm</code> 使用Lua语言进行配置,更灵活<br><strong>最重要的是,配起来比较好看!!!颜值即力量🐂🍺</strong><br>具体配置方式可见<a target="_blank" rel="noopener" href="https://wezterm.org/index.html">wezterm官网</a><br>也可以参考我的<a target="_blank" rel="noopener" href="https://github.com/FergusAAA/dotfiles/blob/main/wezterm/.wezterm.lua">dotfile</a></p>
+<h1 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h1><blockquote>
+<p>也可以参考windows官网的方式</p>
+</blockquote>
+<h2 id="1-安装WSL内核"><a href="#1-安装WSL内核" class="headerlink" title="1. 安装WSL内核"></a>1. 安装WSL内核</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">正常情况下不需要执行这一步,windows系统一般都会将wsl程序安装好.</span><br>wsl.exe --install<br><span class="hljs-meta prompt_"># </span><span class="language-bash">更新到最新</span><br>wsl.exe --update<br></code></pre></td></tr></table></figure>
+<p>如果windows服务不连通,可以直接在<a target="_blank" rel="noopener" href="https://github.com/microsoft/WSL/releases">github</a>下载release包</p>
+<h2 id="2-启用-Linux-的-Windows-子系统-和-虚拟机功能"><a href="#2-启用-Linux-的-Windows-子系统-和-虚拟机功能" class="headerlink" title="2. 启用 Linux 的 Windows 子系统 和 虚拟机功能"></a>2. 启用 Linux 的 Windows 子系统 和 虚拟机功能</h2><p>以管理员身份打开 PowerShell 并运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart<br>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
+<h2 id="3-下载安装Arch发行版"><a href="#3-下载安装Arch发行版" class="headerlink" title="3. 下载安装Arch发行版"></a>3. 下载安装Arch发行版</h2><p>这里推荐使用yuk7的打包的<a target="_blank" rel="noopener" href="https://github.com/yuk7/ArchWSL">ArchWSL发行版</a><br>下载zip<a target="_blank" rel="noopener" href="https://github.com/yuk7/ArchWSL/releases">Release包</a><br>安装:</p>
 <ol>
-<li>手动管理混乱</li>
-<li>家目录堆满分散的 dotfiles，易冲突、难维护。</li>
-<li>符号链接易出错：手工创建&#x2F;删除链接易遗漏或损坏文件。</li>
-<li>迁移部署繁琐：新环境需复制文件或重写配置，效率低。</li>
-<li>版本控制困难</li>
+<li>推荐安装到非C盘,解压zip文件到目标路径</li>
+<li>双击运行<code>Arch.exe</code>,等待提取 rootf 并注册到 WSL</li>
 </ol>
-<h1 id="安装-stow"><a href="#安装-stow" class="headerlink" title="安装 stow"></a>安装 stow</h1><p>MacOS可以通过包管理器 homebrew 来安装：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">brew install stow<br></code></pre></td></tr></table></figure>
-<p>Linux 各种发行版也可以通过各自的包管理工具安装:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">sudo pacmane -S stow<br>sudo apt install stow<br></code></pre></td></tr></table></figure>
+<h1 id="配置ArchWsl"><a href="#配置ArchWsl" class="headerlink" title="配置ArchWsl"></a>配置ArchWsl</h1><h2 id="1-设置wsl2-打开PowerShell并运行"><a href="#1-设置wsl2-打开PowerShell并运行" class="headerlink" title="1. 设置wsl2, 打开PowerShell并运行:"></a>1. 设置<code>wsl2</code>, 打开<code>PowerShell</code>并运行:</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">设置默认版本是wsl2</span><br>wsl.exe --set-default-version 2<br></code></pre></td></tr></table></figure>
+<h2 id="2-启动wsl"><a href="#2-启动wsl" class="headerlink" title="2. 启动wsl:"></a>2. 启动<code>wsl</code>:</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">重启wsl,先关闭</span><br>wsl.exe --shutdown<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看发行版内容</span><br>wsl.exe -l -v<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动wsl 指定的发行版,具体看上述命令返回打印结果</span><br>Arch<br></code></pre></td></tr></table></figure>
+<h2 id="3-设置root密码-输入以下命令"><a href="#3-设置root密码-输入以下命令" class="headerlink" title="3. 设置root密码,输入以下命令:"></a>3. 设置<code>root</code>密码,输入以下命令:</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">输入密码时是不可见的</span><br>  passwd root<br></code></pre></td></tr></table></figure>
+<h2 id="4-配置pacman"><a href="#4-配置pacman" class="headerlink" title="4. 配置pacman"></a>4. 配置<code>pacman</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">archlinuxcn</span><br>echo &#x27;[archlinuxcn]<br>Server = https://repo.archlinuxcn.org/$arch&#x27; &gt;&gt; /etc/pacman.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用国内镜像源,将China源打开,并放置到最顶端</span><br>vim /etc/pacman.d/mirrorlist<br></code></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/mirrorlist.png" srcset="/fergus.github.io/img/loading.gif" lazyload alt="mirrorlist" title="使用国内镜像源"></p>
+<h2 id="5-安装keyring"><a href="#5-安装keyring" class="headerlink" title="5. 安装keyring"></a>5. 安装<code>keyring</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman-key --init<br>pacman-key --populate<br>pacman -Syyu<br>pacman -S archlinux-keyring<br></code></pre></td></tr></table></figure>
 
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><blockquote>
-<p>举例:管理 zsh kitty  </p>
-</blockquote>
-<h3 id="建立目录"><a href="#建立目录" class="headerlink" title="建立目录"></a>建立目录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell">mkdir -p $HOME/.dotfiles<br>mkdir -p $HOME/.dotfiles/zsh<br>mkdir -p $HOME/.dotfiles/kitty<br></code></pre></td></tr></table></figure>
+<h2 id="6-安装基础软件"><a href="#6-安装基础软件" class="headerlink" title="6. 安装基础软件"></a>6. 安装基础软件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">pacman -S base-devel git openssh zsh<br></code></pre></td></tr></table></figure>
 
-<h3 id="文件夹来管理配置文件"><a href="#文件夹来管理配置文件" class="headerlink" title="文件夹来管理配置文件"></a>文件夹来管理配置文件</h3><p>zsh 配置文件:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">将.zshrc 移动到 .dotfiles/zsh 目录</span><br>mv $HOME/.zshrc $HOME/.dotfiles/zsh/<br></code></pre></td></tr></table></figure>
+<h2 id="7-添加非root用户"><a href="#7-添加非root用户" class="headerlink" title="7. 添加非root用户"></a>7. 添加<code>非root</code>用户</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">useradd -m -G wheel -s /bin/zsh &lt;用户名&gt;<br>passwd &lt;用户名&gt;<br></code></pre></td></tr></table></figure>
 
-<p>kitty 配置文件:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">在kitty目录下,创建对应kitty配置文件路径的目录</span><br>cd $HOME/.dotfiles/kitty<br>mkdir -p .config/kitty<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_">#</span><span class="language-bash">将原有的kitty配置文件移动到对应目录</span><br>mv $HOME/.config/kitty/kitty.conf $HOME/.dotfiles/kitty/.config/kitty/<br></code></pre></td></tr></table></figure>
+<h2 id="8-使用vim编辑器通过visudo命令编辑sudoers文件"><a href="#8-使用vim编辑器通过visudo命令编辑sudoers文件" class="headerlink" title="8. 使用vim编辑器通过visudo命令编辑sudoers文件"></a>8. 使用<code>vim</code>编辑器通过<code>visudo</code>命令编辑<code>sudoers</code>文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">EDITOR=vim visudo # 这里需要显式的指定编辑器<br></code></pre></td></tr></table></figure>
+<p>找到如下这样的一行，把前面的注释符号<code>#</code>去掉</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">%wheel ALL=(ALL:ALL) ALL</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="利用-stow-创建符号链接"><a href="#利用-stow-创建符号链接" class="headerlink" title="利用 stow 创建符号链接"></a>利用 stow 创建符号链接</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">为所有管理的配置文件建立符号链接</span><br>stow -v -t ~ */<br></code></pre></td></tr></table></figure>
+<h2 id="9-设置wsl的默认登录用户为"><a href="#9-设置wsl的默认登录用户为" class="headerlink" title="9. 设置wsl的默认登录用户为&lt;用户名&gt;"></a>9. 设置<code>wsl</code>的默认登录用户为<code>&lt;用户名&gt;</code></h2><p>退出<code>wsl</code>,回到<code>PowerShell</code>路径下,设置默认用户是<code>&lt;用户名&gt;</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">发行版名称可以用 wsl.exe -l -v获取</span><br>&lt;发行版名称&gt; config --default-user &lt;用户名&gt;<br>wsl.exe --shutdown<br></code></pre></td></tr></table></figure>
+<h2 id="10-设置wezterm-打开默认进入wsl-并登录到"><a href="#10-设置wezterm-打开默认进入wsl-并登录到" class="headerlink" title="10. 设置wezterm,打开默认进入wsl,并登录到&lt;用户名&gt;"></a>10. 设置<code>wezterm</code>,打开默认进入<code>wsl</code>,并登录到<code>&lt;用户名&gt;</code></h2><p>具体可以参考我的<a target="_blank" rel="noopener" href="https://github.com/FergusAAA/dotfiles/blob/main/wezterm/.wezterm.lua">dotfiles</a></p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lua">c.default_prog = &#123; <span class="hljs-string">&quot;wsl&quot;</span>, <span class="hljs-string">&quot;--distribution&quot;</span>, <span class="hljs-string">&quot;Arch&quot;</span>, <span class="hljs-string">&quot;--cd&quot;</span>, <span class="hljs-string">&quot;/home/fergus&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
 
-<p>如果只想为某个配置文件建立符号链接，可以指定目录：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">指定目录为 zsh</span><br>stow -v -t ~ zsh<br></code></pre></td></tr></table></figure>
-
-<h3 id="纳入版本控制"><a href="#纳入版本控制" class="headerlink" title="纳入版本控制"></a>纳入版本控制</h3><blockquote>
-<p>一个好的实践是将 .dotfiles 目录纳入版本控制，这样可以轻松管理和迁移配置文件</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">cd $HOME/.dotfiles<br>git init<br>git add .<br>git commit -m &quot;Initial commit of dotfiles&quot;<br></code></pre></td></tr></table></figure>
+<h2 id="🌟🌟🌟恭喜-🌟🌟🌟"><a href="#🌟🌟🌟恭喜-🌟🌟🌟" class="headerlink" title="🌟🌟🌟恭喜!!!🌟🌟🌟"></a>🌟🌟🌟恭喜!!!🌟🌟🌟</h2><p><strong>到这里就能正常使用WslArch啦!<br>接下来就是配置美化</strong><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/%E5%90%B8%E6%BA%9C%EF%BD%9E.gif" srcset="/fergus.github.io/img/loading.gif" lazyload alt="吸溜gif" title="吸溜"></p>
 
                 
               </div>
@@ -374,6 +379,8 @@
       
         <a href="/fergus.github.io/tags/%E6%8A%80%E6%9C%AF%E6%96%87%E7%AB%A0/" class="print-no-link">#技术文章</a>
       
+        <a href="/fergus.github.io/tags/windows/" class="print-no-link">#windows</a>
+      
     </div>
   
 </div>
@@ -384,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>Stow 管理.dotfiles 操作指南</div>
-      <div>https://fergusaaa.github.io/fergus.github.io/2025/07/31/CLI/Stow/</div>
+      <div>一起来配置 wsl2 吧(Arch版)</div>
+      <div>https://fergusaaa.github.io/fergus.github.io/2025/08/09/CLI/wsl/</div>
     </div>
     <div class="license-meta">
       
@@ -397,7 +404,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月31日</div>
+          <div>2025年8月9日</div>
         </div>
       
       
@@ -429,18 +436,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/fergus.github.io/2025/08/09/CLI/wsl/" title="一起来配置 wsl2 吧(Arch版)">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">一起来配置 wsl2 吧(Arch版)</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/fergus.github.io/2024/08/08/CLI/Vim/" title="Vim奇技淫巧(实用快捷键)">
-                        <span class="hidden-mobile">Vim奇技淫巧(实用快捷键)</span>
+                      <a href="/fergus.github.io/2025/07/31/CLI/Stow/" title="Stow 管理.dotfiles 操作指南">
+                        <span class="hidden-mobile">Stow 管理.dotfiles 操作指南</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

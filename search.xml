@@ -1,6 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Repo使用</title>
+    <url>/fergus.github.io/2024/03/28/Android/Repo/</url>
+    <content><![CDATA[<style>
+    html, body, .markdown-body {
+        font-family:"JetBrainsMono Nerd Font";
+        font-size: 16px;
+    }
+</style>
+
+<h1 id="repo-工作原理"><a href="#repo-工作原理" class="headerlink" title="repo 工作原理"></a>repo 工作原理</h1><blockquote>
+<p>通过一个git库来管理项目的清单文件，这个git仓库的名字叫<code>manifests</code>。在客户端使用repo初始化一个项目的时候,就会从远程把<code>manifests</code>git仓库拷贝到本地。</p>
+</blockquote>
+<h2 id="项目清单库-repo-manifests"><a href="#项目清单库-repo-manifests" class="headerlink" title="项目清单库(.repo&#x2F;manifests)"></a>项目清单库(.repo&#x2F;manifests)</h2><p><a href="https://android.googlesource.com/platform/manifest">AOSP的default.xml</a>的文件内容如下:</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;..&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;https://android-review.googlesource.com/&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;master&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">sync-j</span>=<span class="hljs-string">&quot;4&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;build&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/build&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk,tradefed&quot;</span> &gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">copyfile</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;core/root.mk&quot;</span> <span class="hljs-attr">dest</span>=<span class="hljs-string">&quot;Makefile&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;abi/cpp&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/abi/cpp&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;art&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/art&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk&quot;</span> /&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;tools/studio/translation&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/tools/studio/translation&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;notdefault,tools&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;tools/swt&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/tools/swt&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;notdefault,tools&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>&lt;remote&gt;：描述了远程仓库的基本信息。name描述的是一个远程仓库的名称，通常我们看到的命名是origin;fetch用作项目名称的前缘，在构造项目仓库远程地址时使用到;review描述的是用作code review的server地址</p>
+</li>
+<li><p>&lt;default&gt;：default标签的定义的属性，将作为<project>标签的默认属性，在<project>标签中，也可以重写这些属性。属性revision表示当前的版本，也就是我们俗称的分支;属性remote描述的是默认使用的远程仓库名称，即<remote>标签中name的属性值;属性sync-j表示在同步远程代码时，并发的任务数量，配置高的机器可以将这个值调大</p>
+</li>
+<li><p>&lt;project&gt;：每一个repo管理的git库，就是对应到一个<project>标签，path描述的是项目相对于远程仓库URL的路径，同时将作为对应的git库在本地代码的路径; name用于定义项目名称，命名方式采用的是整个项目URL的相对地址。 譬如，AOSP项目的URL为<a href="https://android.googlesource.com/%EF%BC%8C%E5%91%BD%E5%90%8D%E4%B8%BAplatform/build%E7%9A%84git%E5%BA%93%EF%BC%8C%E8%AE%BF%E9%97%AE%E7%9A%84URL%E5%B0%B1%E6%98%AFhttps://android.googlesource.com/platform/build">https://android.googlesource.com/，命名为platform/build的git库，访问的URL就是https://android.googlesource.com/platform/build</a></p>
+</li>
+</ul>
+<h1 id="创建清单库-–-repo-init"><a href="#创建清单库-–-repo-init" class="headerlink" title="创建清单库 – repo init"></a>创建清单库 – repo init</h1><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo init -u &lt;URL&gt; [&lt;OPTIONS&gt;]<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>-u: 指定 <code>manifests</code> 清单库的URL</li>
+<li>-m, -manifest-name: 指定清单文件（默认会时候 <code>default.xml</code> )</li>
+<li>-b, -manifest-branch: 指定清单库的分支</li>
+</ul>
+<h1 id="同步代码-–-repo-sync"><a href="#同步代码-–-repo-sync" class="headerlink" title="同步代码 – repo sync"></a>同步代码 – repo sync</h1><blockquote>
+<p>同步所有仓库,可以指定project</p>
+</blockquote>
+<h2 id="repo-sync的参数"><a href="#repo-sync的参数" class="headerlink" title="repo sync的参数"></a>repo sync的参数</h2><ul>
+<li>-j : 可以指定线程数</li>
+<li>-c : <code>-current-branch</code> 只同步指定的远程分支。默认情况下,<code>sync</code>会同步所有的远程分支,当远程分支比较多的时候,下载代码量大。使用该参数,缩减下载时间。</li>
+<li>-d : <code>-detach</code> 脱离当前的分支,将<code>HEAD</code>强制切换到<code>manifest.xml</code>中设定的分支,忽略本地的改动且不会覆盖掉本地的改动。</li>
+<li>-f : <code>-force-broken</code> 当有git仓库sync失败了,不中断整个同步操作,继续同步其他的git库。</li>
+</ul>
+<h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><blockquote>
+<p>在当前清单库分支的基础上创建分支，并切到对应分支。</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo start dev --all<br></code></pre></td></tr></table></figure>
+<p><code>repo start</code> 本质上是对 <code>git checkout -b</code> 命令的封装。但是和git命令仍然有所不同，区别在与：</p>
+<ul>
+<li>repo start: 在清单文件分支的基础上创建分支，即使本地某些仓库分支切到单独分支也不影响</li>
+<li>git checkout -b: 在本地文件分支的基础上创建分支</li>
+</ul>
+<h1 id="forall"><a href="#forall" class="headerlink" title="forall"></a>forall</h1><blockquote>
+<p>对 全部 或 指定的 project 执行命令</p>
+</blockquote>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo forall [PROJECT_LIST] -c &lt;COMMAND&gt;<br></code></pre></td></tr></table></figure>
+<p><code>project</code> 之间用空格隔开，例如:</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo forall frameworks/base frameworks/av -c &quot;git status&quot;<br></code></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>计算机科学</category>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>技术文章</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Stow 管理.dotfiles 操作指南</title>
     <url>/fergus.github.io/2025/07/31/CLI/Stow/</url>
     <content><![CDATA[<style>
@@ -55,6 +120,68 @@
       <tags>
         <tag>博客</tag>
         <tag>技术文章</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>一起来配置 wsl2 吧(Arch版)</title>
+    <url>/fergus.github.io/2025/08/09/CLI/wsl/</url>
+    <content><![CDATA[<style>
+    html, body, .markdown-body {
+        font-family:"JetBrainsMono Nerd Font";
+        font-size: 16px;
+    }
+</style>
+<hr>
+<p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/btw.jpg" alt="btw" title="btw"><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/i_only_use_arch.webp" alt="i_only_use_arch" title="i_only_use_arch"></p>
+<h1 id="先看看成品图"><a href="#先看看成品图" class="headerlink" title="先看看成品图"></a>先看看成品图</h1><p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl_show1.png" alt="wsl pokemon" title="pokemon"><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl_show2.png" alt="wsl fastfetch" title="fastfetch"></p>
+<p>配置美化,最后就是为了截图的这一刻<br><img src="https://imagehost.mintimate.cn/emoticon/makeTroubleInKeyboard.gif" alt="gif" title="嘿嘿"></p>
+<h1 id="准备终端模拟器"><a href="#准备终端模拟器" class="headerlink" title="准备终端模拟器"></a>准备终端模拟器</h1><blockquote>
+<p>一个好用的,配置随心的终端模拟器是美化的起点.</p>
+</blockquote>
+<p>这里只推荐 <code>wezterm</code> 和 <code>Windows Terminal</code>. 不过还是更推荐 <code>wezterm</code>, <code>wezterm</code>由Rust开发,更高性能. 跨平台,多平台使用体验基本一致,而 <code>Windows Terminal</code> 只支持 Windows. <code>wezterm</code> 使用Lua语言进行配置,更灵活<br><strong>最重要的是,配起来比较好看!!!颜值即力量🐂🍺</strong><br>具体配置方式可见<a href="https://wezterm.org/index.html">wezterm官网</a><br>也可以参考我的<a href="https://github.com/FergusAAA/dotfiles/blob/main/wezterm/.wezterm.lua">dotfile</a></p>
+<h1 id="安装WSL"><a href="#安装WSL" class="headerlink" title="安装WSL"></a>安装WSL</h1><blockquote>
+<p>也可以参考windows官网的方式</p>
+</blockquote>
+<h2 id="1-安装WSL内核"><a href="#1-安装WSL内核" class="headerlink" title="1. 安装WSL内核"></a>1. 安装WSL内核</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">正常情况下不需要执行这一步,windows系统一般都会将wsl程序安装好.</span><br>wsl.exe --install<br><span class="hljs-meta prompt_"># </span><span class="language-bash">更新到最新</span><br>wsl.exe --update<br></code></pre></td></tr></table></figure>
+<p>如果windows服务不连通,可以直接在<a href="https://github.com/microsoft/WSL/releases">github</a>下载release包</p>
+<h2 id="2-启用-Linux-的-Windows-子系统-和-虚拟机功能"><a href="#2-启用-Linux-的-Windows-子系统-和-虚拟机功能" class="headerlink" title="2. 启用 Linux 的 Windows 子系统 和 虚拟机功能"></a>2. 启用 Linux 的 Windows 子系统 和 虚拟机功能</h2><p>以管理员身份打开 PowerShell 并运行：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart<br>dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart<br></code></pre></td></tr></table></figure>
+<h2 id="3-下载安装Arch发行版"><a href="#3-下载安装Arch发行版" class="headerlink" title="3. 下载安装Arch发行版"></a>3. 下载安装Arch发行版</h2><p>这里推荐使用yuk7的打包的<a href="https://github.com/yuk7/ArchWSL">ArchWSL发行版</a><br>下载zip<a href="https://github.com/yuk7/ArchWSL/releases">Release包</a><br>安装:</p>
+<ol>
+<li>推荐安装到非C盘,解压zip文件到目标路径</li>
+<li>双击运行<code>Arch.exe</code>,等待提取 rootf 并注册到 WSL</li>
+</ol>
+<h1 id="配置ArchWsl"><a href="#配置ArchWsl" class="headerlink" title="配置ArchWsl"></a>配置ArchWsl</h1><h2 id="1-设置wsl2-打开PowerShell并运行"><a href="#1-设置wsl2-打开PowerShell并运行" class="headerlink" title="1. 设置wsl2, 打开PowerShell并运行:"></a>1. 设置<code>wsl2</code>, 打开<code>PowerShell</code>并运行:</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">设置默认版本是wsl2</span><br>wsl.exe --set-default-version 2<br></code></pre></td></tr></table></figure>
+<h2 id="2-启动wsl"><a href="#2-启动wsl" class="headerlink" title="2. 启动wsl:"></a>2. 启动<code>wsl</code>:</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">重启wsl,先关闭</span><br>wsl.exe --shutdown<br><span class="hljs-meta prompt_"># </span><span class="language-bash">查看发行版内容</span><br>wsl.exe -l -v<br><span class="hljs-meta prompt_"># </span><span class="language-bash">启动wsl 指定的发行版,具体看上述命令返回打印结果</span><br>Arch<br></code></pre></td></tr></table></figure>
+<h2 id="3-设置root密码-输入以下命令"><a href="#3-设置root密码-输入以下命令" class="headerlink" title="3. 设置root密码,输入以下命令:"></a>3. 设置<code>root</code>密码,输入以下命令:</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">输入密码时是不可见的</span><br>  passwd root<br></code></pre></td></tr></table></figure>
+<h2 id="4-配置pacman"><a href="#4-配置pacman" class="headerlink" title="4. 配置pacman"></a>4. 配置<code>pacman</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">archlinuxcn</span><br>echo &#x27;[archlinuxcn]<br>Server = https://repo.archlinuxcn.org/$arch&#x27; &gt;&gt; /etc/pacman.conf<br><span class="hljs-meta prompt_"></span><br><span class="hljs-meta prompt_"># </span><span class="language-bash">使用国内镜像源,将China源打开,并放置到最顶端</span><br>vim /etc/pacman.d/mirrorlist<br></code></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/mirrorlist.png" alt="mirrorlist" title="使用国内镜像源"></p>
+<h2 id="5-安装keyring"><a href="#5-安装keyring" class="headerlink" title="5. 安装keyring"></a>5. 安装<code>keyring</code></h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">pacman-key --init<br>pacman-key --populate<br>pacman -Syyu<br>pacman -S archlinux-keyring<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-安装基础软件"><a href="#6-安装基础软件" class="headerlink" title="6. 安装基础软件"></a>6. 安装基础软件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">pacman -S base-devel git openssh zsh<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-添加非root用户"><a href="#7-添加非root用户" class="headerlink" title="7. 添加非root用户"></a>7. 添加<code>非root</code>用户</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">useradd -m -G wheel -s /bin/zsh &lt;用户名&gt;<br>passwd &lt;用户名&gt;<br></code></pre></td></tr></table></figure>
+
+<h2 id="8-使用vim编辑器通过visudo命令编辑sudoers文件"><a href="#8-使用vim编辑器通过visudo命令编辑sudoers文件" class="headerlink" title="8. 使用vim编辑器通过visudo命令编辑sudoers文件"></a>8. 使用<code>vim</code>编辑器通过<code>visudo</code>命令编辑<code>sudoers</code>文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">EDITOR=vim visudo # 这里需要显式的指定编辑器<br></code></pre></td></tr></table></figure>
+<p>找到如下这样的一行，把前面的注释符号<code>#</code>去掉</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">%wheel ALL=(ALL:ALL) ALL</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="9-设置wsl的默认登录用户为"><a href="#9-设置wsl的默认登录用户为" class="headerlink" title="9. 设置wsl的默认登录用户为&lt;用户名&gt;"></a>9. 设置<code>wsl</code>的默认登录用户为<code>&lt;用户名&gt;</code></h2><p>退出<code>wsl</code>,回到<code>PowerShell</code>路径下,设置默认用户是<code>&lt;用户名&gt;</code></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">发行版名称可以用 wsl.exe -l -v获取</span><br>&lt;发行版名称&gt; config --default-user &lt;用户名&gt;<br>wsl.exe --shutdown<br></code></pre></td></tr></table></figure>
+<h2 id="10-设置wezterm-打开默认进入wsl-并登录到"><a href="#10-设置wezterm-打开默认进入wsl-并登录到" class="headerlink" title="10. 设置wezterm,打开默认进入wsl,并登录到&lt;用户名&gt;"></a>10. 设置<code>wezterm</code>,打开默认进入<code>wsl</code>,并登录到<code>&lt;用户名&gt;</code></h2><p>具体可以参考我的<a href="https://github.com/FergusAAA/dotfiles/blob/main/wezterm/.wezterm.lua">dotfiles</a></p>
+<figure class="highlight lua"><table><tr><td class="code"><pre><code class="hljs lua">c.default_prog = &#123; <span class="hljs-string">&quot;wsl&quot;</span>, <span class="hljs-string">&quot;--distribution&quot;</span>, <span class="hljs-string">&quot;Arch&quot;</span>, <span class="hljs-string">&quot;--cd&quot;</span>, <span class="hljs-string">&quot;/home/fergus&quot;</span> &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="🌟🌟🌟恭喜-🌟🌟🌟"><a href="#🌟🌟🌟恭喜-🌟🌟🌟" class="headerlink" title="🌟🌟🌟恭喜!!!🌟🌟🌟"></a>🌟🌟🌟恭喜!!!🌟🌟🌟</h2><p><strong>到这里就能正常使用WslArch啦!<br>接下来就是配置美化</strong><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/%E5%90%B8%E6%BA%9C%EF%BD%9E.gif" alt="吸溜gif" title="吸溜"></p>
+]]></content>
+      <categories>
+        <category>计算机科学</category>
+        <category>Linux</category>
+        <category>CLI</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>技术文章</tag>
+        <tag>windows</tag>
       </tags>
   </entry>
   <entry>
@@ -118,71 +245,6 @@
         <tag>博客</tag>
         <tag>技术文章</tag>
         <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Repo使用</title>
-    <url>/fergus.github.io/2024/03/28/Android/Repo/</url>
-    <content><![CDATA[<style>
-    html, body, .markdown-body {
-        font-family:"JetBrainsMono Nerd Font";
-        font-size: 16px;
-    }
-</style>
-
-<h1 id="repo-工作原理"><a href="#repo-工作原理" class="headerlink" title="repo 工作原理"></a>repo 工作原理</h1><blockquote>
-<p>通过一个git库来管理项目的清单文件，这个git仓库的名字叫<code>manifests</code>。在客户端使用repo初始化一个项目的时候,就会从远程把<code>manifests</code>git仓库拷贝到本地。</p>
-</blockquote>
-<h2 id="项目清单库-repo-manifests"><a href="#项目清单库-repo-manifests" class="headerlink" title="项目清单库(.repo&#x2F;manifests)"></a>项目清单库(.repo&#x2F;manifests)</h2><p><a href="https://android.googlesource.com/platform/manifest">AOSP的default.xml</a>的文件内容如下:</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">manifest</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">remote</span>  <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">fetch</span>=<span class="hljs-string">&quot;..&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">review</span>=<span class="hljs-string">&quot;https://android-review.googlesource.com/&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">default</span> <span class="hljs-attr">revision</span>=<span class="hljs-string">&quot;master&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">remote</span>=<span class="hljs-string">&quot;aosp&quot;</span></span><br><span class="hljs-tag">             <span class="hljs-attr">sync-j</span>=<span class="hljs-string">&quot;4&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;build&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/build&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk,tradefed&quot;</span> &gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">copyfile</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;core/root.mk&quot;</span> <span class="hljs-attr">dest</span>=<span class="hljs-string">&quot;Makefile&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">project</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;abi/cpp&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/abi/cpp&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;art&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/art&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;pdk&quot;</span> /&gt;</span><br>    ...<br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;tools/studio/translation&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/tools/studio/translation&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;notdefault,tools&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">project</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;tools/swt&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;platform/tools/swt&quot;</span> <span class="hljs-attr">groups</span>=<span class="hljs-string">&quot;notdefault,tools&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">manifest</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<ul>
-<li><p>&lt;remote&gt;：描述了远程仓库的基本信息。name描述的是一个远程仓库的名称，通常我们看到的命名是origin;fetch用作项目名称的前缘，在构造项目仓库远程地址时使用到;review描述的是用作code review的server地址</p>
-</li>
-<li><p>&lt;default&gt;：default标签的定义的属性，将作为<project>标签的默认属性，在<project>标签中，也可以重写这些属性。属性revision表示当前的版本，也就是我们俗称的分支;属性remote描述的是默认使用的远程仓库名称，即<remote>标签中name的属性值;属性sync-j表示在同步远程代码时，并发的任务数量，配置高的机器可以将这个值调大</p>
-</li>
-<li><p>&lt;project&gt;：每一个repo管理的git库，就是对应到一个<project>标签，path描述的是项目相对于远程仓库URL的路径，同时将作为对应的git库在本地代码的路径; name用于定义项目名称，命名方式采用的是整个项目URL的相对地址。 譬如，AOSP项目的URL为<a href="https://android.googlesource.com/%EF%BC%8C%E5%91%BD%E5%90%8D%E4%B8%BAplatform/build%E7%9A%84git%E5%BA%93%EF%BC%8C%E8%AE%BF%E9%97%AE%E7%9A%84URL%E5%B0%B1%E6%98%AFhttps://android.googlesource.com/platform/build">https://android.googlesource.com/，命名为platform/build的git库，访问的URL就是https://android.googlesource.com/platform/build</a></p>
-</li>
-</ul>
-<h1 id="创建清单库-–-repo-init"><a href="#创建清单库-–-repo-init" class="headerlink" title="创建清单库 – repo init"></a>创建清单库 – repo init</h1><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo init -u &lt;URL&gt; [&lt;OPTIONS&gt;]<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>-u: 指定 <code>manifests</code> 清单库的URL</li>
-<li>-m, -manifest-name: 指定清单文件（默认会时候 <code>default.xml</code> )</li>
-<li>-b, -manifest-branch: 指定清单库的分支</li>
-</ul>
-<h1 id="同步代码-–-repo-sync"><a href="#同步代码-–-repo-sync" class="headerlink" title="同步代码 – repo sync"></a>同步代码 – repo sync</h1><blockquote>
-<p>同步所有仓库,可以指定project</p>
-</blockquote>
-<h2 id="repo-sync的参数"><a href="#repo-sync的参数" class="headerlink" title="repo sync的参数"></a>repo sync的参数</h2><ul>
-<li>-j : 可以指定线程数</li>
-<li>-c : <code>-current-branch</code> 只同步指定的远程分支。默认情况下,<code>sync</code>会同步所有的远程分支,当远程分支比较多的时候,下载代码量大。使用该参数,缩减下载时间。</li>
-<li>-d : <code>-detach</code> 脱离当前的分支,将<code>HEAD</code>强制切换到<code>manifest.xml</code>中设定的分支,忽略本地的改动且不会覆盖掉本地的改动。</li>
-<li>-f : <code>-force-broken</code> 当有git仓库sync失败了,不中断整个同步操作,继续同步其他的git库。</li>
-</ul>
-<h1 id="start"><a href="#start" class="headerlink" title="start"></a>start</h1><blockquote>
-<p>在当前清单库分支的基础上创建分支，并切到对应分支。</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo start dev --all<br></code></pre></td></tr></table></figure>
-<p><code>repo start</code> 本质上是对 <code>git checkout -b</code> 命令的封装。但是和git命令仍然有所不同，区别在与：</p>
-<ul>
-<li>repo start: 在清单文件分支的基础上创建分支，即使本地某些仓库分支切到单独分支也不影响</li>
-<li>git checkout -b: 在本地文件分支的基础上创建分支</li>
-</ul>
-<h1 id="forall"><a href="#forall" class="headerlink" title="forall"></a>forall</h1><blockquote>
-<p>对 全部 或 指定的 project 执行命令</p>
-</blockquote>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo forall [PROJECT_LIST] -c &lt;COMMAND&gt;<br></code></pre></td></tr></table></figure>
-<p><code>project</code> 之间用空格隔开，例如:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">repo forall frameworks/base frameworks/av -c &quot;git status&quot;<br></code></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>计算机科学</category>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>技术文章</tag>
       </tags>
   </entry>
 </search>
