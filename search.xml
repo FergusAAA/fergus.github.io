@@ -123,69 +123,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Vim奇技淫巧(实用快捷键)</title>
-    <url>/fergus.github.io/2024/08/08/CLI/Vim/</url>
-    <content><![CDATA[<style>
-    html, body, .markdown-body {
-        font-family:"JetBrainsMono Nerd Font";
-        font-size: 16px;
-    }
-</style>
-
-<h1 id="Vim奇技淫巧（实用快捷键）"><a href="#Vim奇技淫巧（实用快捷键）" class="headerlink" title="Vim奇技淫巧（实用快捷键）"></a>Vim奇技淫巧（实用快捷键）</h1><blockquote>
-<p>本文适合对Vim有一定认知的，对Vim快捷键有基础了解的同学观看。<br>笔者主要记录一些平时自己的学习心得，以及一些可能用不到，但是用到的时候真的很cool的技巧。</p>
-</blockquote>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>c       按下c键<br>cv      依次按下<code>c v</code>键<br>&lt;C-a&gt;   同时按下<code>Ctrl a</code>键<br>g&lt;C-)&gt;  按下<code>g</code>键后再同时按下<code>Ctrl )</code>键<br>&lt;C-w&gt;h  同时按下<code>Ctrl w</code>键后再按下<code>h</code>键<br>所有快捷键都按以上逻辑表达</p>
-<hr>
-<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><blockquote>
-<p>简单介绍一下Vim的基础操作逻辑。</p>
-</blockquote>
-<ol>
-<li>Vim有<code>正常模式</code>(Normal-mode)，<code>插入模式</code>(Insert-mode)，<code>命令模式</code>(Command-mode)，<code>可视模式</code>(Visual-mode)。可以在Normal-mode中进入其他不同的模式，如使用<code>i</code>进入插入模式，使用<code>v</code>进入Visual-mode，使用<code>:</code>进入Command-mode。</li>
-<li>可以使用<code>hjkl</code>，进行上下左右移动</li>
-<li>Normal-mode下输入<code>:q</code>(退出) 或 <code>:wq</code>(保存退出)</li>
-<li>Normal-mode下快捷键基础操作逻辑：操作符-修饰符-对象，例如：<code>daw</code>(删除-一个-单词)</li>
-</ol>
-<h2 id="选中文本"><a href="#选中文本" class="headerlink" title="选中文本"></a>选中文本</h2><h3 id="选中"><a href="#选中" class="headerlink" title="选中"></a>选中</h3><ul>
-<li><p>基础版本：veeee &#x2F; vwwww<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_131800.gif" alt="gif"></p>
-</li>
-<li><p>中级版本(使用修饰符+对象)</p>
-<ul>
-<li>vt( : 从当前位置选中到下一个<code>(</code>的位置<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_140149.gif" alt="gif"></li>
-<li>va( &#x2F; vi( &#x2F; va{ &#x2F; vi{ : 选中当前括号(花括号)的内容,<code>i</code>(Inside)不包含 <code>a</code>包含<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_141011.gif" alt="git"></li>
-</ul>
-</li>
-<li><p>高级版本(实际上很少用)</p>
-<ul>
-<li>v&#x2F; (c也可以使用当前技巧,且更加合适)<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_153453.gif" alt="gif"></li>
-</ul>
-</li>
-</ul>
-<h3 id="全选"><a href="#全选" class="headerlink" title="全选"></a>全选</h3><ul>
-<li>ggVG: gg(跳转到首行) V(选中当前行) G(跳转到尾)</li>
-<li>使用命令模式%<ul>
-<li>%d:删除所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.51.58.gif" alt="gif"></li>
-<li>%y:复制所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.45.16.gif" alt="gif"></li>
-</ul>
-</li>
-</ul>
-<h2 id="命令模式下获取光标所在单词"><a href="#命令模式下获取光标所在单词" class="headerlink" title="命令模式下获取光标所在单词"></a>命令模式下获取光标所在单词</h2><blockquote>
-<p>命令模式下替换内容时很好用</p>
-</blockquote>
-<p>在命令模式下输入<code>&lt;C-r&gt;&lt;C-w&gt;</code><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2016.33.10.gif" alt="gif"></p>
-]]></content>
-      <categories>
-        <category>计算机科学</category>
-        <category>Linux</category>
-        <category>CLI</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>技术文章</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>一起来配置 wsl2 吧(Arch版)</title>
     <url>/fergus.github.io/2025/08/09/CLI/wsl/</url>
     <content><![CDATA[<style>
@@ -248,13 +185,19 @@
 <h2 id="3-zsh安装配置"><a href="#3-zsh安装配置" class="headerlink" title="3.zsh安装配置"></a>3.zsh安装配置</h2><blockquote>
 <p>后面将会使用stow来配置,可以看我另一篇文章<a href="https://fergusaaa.github.io/fergus.github.io/2025/07/31/CLI/Stow/">Stow 管理.dotfiles 操作指南</a></p>
 </blockquote>
-<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置oh-my-zsh</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">下载安装oh-my-zsh</span><br>sh -c &quot;$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;<br><span class="hljs-meta prompt_">#</span><span class="language-bash">配置zsh</span><br>cd .dotfiles &amp;&amp; stow -v -t ~ zsh<br></code></pre></td></tr></table></figure>
+<h3 id="配置oh-my-zsh"><a href="#配置oh-my-zsh" class="headerlink" title="配置oh-my-zsh"></a>配置<code>oh-my-zsh</code></h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">下载安装``oh-my-zsh``</span><br>sh -c &quot;$(wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&quot;<br><span class="hljs-meta prompt_">#</span><span class="language-bash">配置zsh</span><br>cd .dotfiles &amp;&amp; stow -v -t ~ zsh<br></code></pre></td></tr></table></figure>
 <p>使用<code>stow</code>这一步可能会报错,因为可能会有文件冲突.删除掉冲突的文件就好了</p>
 <h3 id="配置使用starship"><a href="#配置使用starship" class="headerlink" title="配置使用starship"></a>配置使用<code>starship</code></h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell">cd .dotfiles &amp;&amp; stow -v -t ~ starship<br></code></pre></td></tr></table></figure>
 
-<h3 id="安装pokemon-宝可梦🥳🥳🥳"><a href="#安装pokemon-宝可梦🥳🥳🥳" class="headerlink" title="安装pokemon(宝可梦🥳🥳🥳)"></a>安装pokemon(宝可梦🥳🥳🥳)</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">软链接windows的Downloads文件夹到家目录</span><br>ln -s /mnt/c/User/&lt;用户名&gt;/Downloads Downloads<br>cd Downloads &amp;&amp; git clone https://github.com/Findarato/pokemon-colorscripts.git<br>cd pokemon-colorscripts &amp;&amp; sudo ./install.sh<br></code></pre></td></tr></table></figure>
+<h3 id="安装pokemon-宝可梦🥳🥳🥳"><a href="#安装pokemon-宝可梦🥳🥳🥳" class="headerlink" title="安装pokemon(宝可梦🥳🥳🥳)"></a>安装<code>pokemon</code>(宝可梦🥳🥳🥳)</h3><figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">#</span><span class="language-bash">软链接windows的Downloads文件夹到家目录</span><br>ln -s /mnt/c/User/&lt;用户名&gt;/Downloads Downloads<br>cd Downloads &amp;&amp; git clone https://github.com/Findarato/pokemon-colorscripts.git<br>cd pokemon-colorscripts &amp;&amp; sudo ./install.sh<br></code></pre></td></tr></table></figure>
 
 <p><strong>好了!!!这个时候退出终端重进,或者<code>source ~/.zshrc</code>看一下效果吧🤩</strong></p>
+<h2 id="4-fastfetch"><a href="#4-fastfetch" class="headerlink" title="4.fastfetch"></a>4.<code>fastfetch</code></h2><blockquote>
+<p>使用频率最高的命令🤫</p>
+</blockquote>
+<p>可以参考配置文件,修改属于自己的fetch</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_"># </span><span class="language-bash">使用stow安装配置文件</span><br>cd ~/.dotfiles<br>stow -v -t ~ fastfetch<br></code></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/wsl_show2.png" alt="fastfetch" title="fastfetch"></p>
 <h2 id="4-lazyvim安装配置"><a href="#4-lazyvim安装配置" class="headerlink" title="4.lazyvim安装配置"></a>4.<code>lazyvim</code>安装配置</h2><blockquote>
 <p>简单 好用 强大,堪称终端IDE<br>参考<a href="https://www.lazyvim.org/">lazyvim官网</a></p>
 </blockquote>
@@ -281,6 +224,69 @@
         <tag>博客</tag>
         <tag>技术文章</tag>
         <tag>windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vim奇技淫巧(实用快捷键)</title>
+    <url>/fergus.github.io/2024/08/08/CLI/Vim/</url>
+    <content><![CDATA[<style>
+    html, body, .markdown-body {
+        font-family:"JetBrainsMono Nerd Font";
+        font-size: 16px;
+    }
+</style>
+
+<h1 id="Vim奇技淫巧（实用快捷键）"><a href="#Vim奇技淫巧（实用快捷键）" class="headerlink" title="Vim奇技淫巧（实用快捷键）"></a>Vim奇技淫巧（实用快捷键）</h1><blockquote>
+<p>本文适合对Vim有一定认知的，对Vim快捷键有基础了解的同学观看。<br>笔者主要记录一些平时自己的学习心得，以及一些可能用不到，但是用到的时候真的很cool的技巧。</p>
+</blockquote>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>c       按下c键<br>cv      依次按下<code>c v</code>键<br>&lt;C-a&gt;   同时按下<code>Ctrl a</code>键<br>g&lt;C-)&gt;  按下<code>g</code>键后再同时按下<code>Ctrl )</code>键<br>&lt;C-w&gt;h  同时按下<code>Ctrl w</code>键后再按下<code>h</code>键<br>所有快捷键都按以上逻辑表达</p>
+<hr>
+<h2 id="基础使用"><a href="#基础使用" class="headerlink" title="基础使用"></a>基础使用</h2><blockquote>
+<p>简单介绍一下Vim的基础操作逻辑。</p>
+</blockquote>
+<ol>
+<li>Vim有<code>正常模式</code>(Normal-mode)，<code>插入模式</code>(Insert-mode)，<code>命令模式</code>(Command-mode)，<code>可视模式</code>(Visual-mode)。可以在Normal-mode中进入其他不同的模式，如使用<code>i</code>进入插入模式，使用<code>v</code>进入Visual-mode，使用<code>:</code>进入Command-mode。</li>
+<li>可以使用<code>hjkl</code>，进行上下左右移动</li>
+<li>Normal-mode下输入<code>:q</code>(退出) 或 <code>:wq</code>(保存退出)</li>
+<li>Normal-mode下快捷键基础操作逻辑：操作符-修饰符-对象，例如：<code>daw</code>(删除-一个-单词)</li>
+</ol>
+<h2 id="选中文本"><a href="#选中文本" class="headerlink" title="选中文本"></a>选中文本</h2><h3 id="选中"><a href="#选中" class="headerlink" title="选中"></a>选中</h3><ul>
+<li><p>基础版本：veeee &#x2F; vwwww<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_131800.gif" alt="gif"></p>
+</li>
+<li><p>中级版本(使用修饰符+对象)</p>
+<ul>
+<li>vt( : 从当前位置选中到下一个<code>(</code>的位置<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_140149.gif" alt="gif"></li>
+<li>va( &#x2F; vi( &#x2F; va{ &#x2F; vi{ : 选中当前括号(花括号)的内容,<code>i</code>(Inside)不包含 <code>a</code>包含<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_141011.gif" alt="git"></li>
+</ul>
+</li>
+<li><p>高级版本(实际上很少用)</p>
+<ul>
+<li>v&#x2F; (c也可以使用当前技巧,且更加合适)<br>  <img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/20240810_153453.gif" alt="gif"></li>
+</ul>
+</li>
+</ul>
+<h3 id="全选"><a href="#全选" class="headerlink" title="全选"></a>全选</h3><ul>
+<li>ggVG: gg(跳转到首行) V(选中当前行) G(跳转到尾)</li>
+<li>使用命令模式%<ul>
+<li>%d:删除所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.51.58.gif" alt="gif"></li>
+<li>%y:复制所有内容<br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2015.45.16.gif" alt="gif"></li>
+</ul>
+</li>
+</ul>
+<h2 id="命令模式下获取光标所在单词"><a href="#命令模式下获取光标所在单词" class="headerlink" title="命令模式下获取光标所在单词"></a>命令模式下获取光标所在单词</h2><blockquote>
+<p>命令模式下替换内容时很好用</p>
+</blockquote>
+<p>在命令模式下输入<code>&lt;C-r&gt;&lt;C-w&gt;</code><br><img src="https://raw.githubusercontent.com/FergusAAA/blog-img/main/Kapture%202025-08-01%20at%2016.33.10.gif" alt="gif"></p>
+]]></content>
+      <categories>
+        <category>计算机科学</category>
+        <category>Linux</category>
+        <category>CLI</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>技术文章</tag>
+        <tag>工具</tag>
       </tags>
   </entry>
 </search>
